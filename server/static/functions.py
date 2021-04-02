@@ -3,7 +3,7 @@
 def buscar_nombre(dogs, name):
     matches = []
     for dog in dogs:
-        if dog.name == name:
+        if dog['name'] == name:
             matches.append(dog)
     return matches
 
@@ -11,6 +11,6 @@ def buscar_nombre(dogs, name):
 def buscar_adoptados(dogs):
     matches = []
     for dog in dogs:
-        if dog.is_adopter:
+        if dog['is_adopted']:
             matches.append(dog)
     return matches
