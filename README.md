@@ -10,7 +10,7 @@
 
 ## 📝 Table of Contents
 
-- [Prerequisitos](#prerequisitos)
+- [Prerrequisitos](#prerequisitos)
 - [Configuracion Inicial](#getting_started)
 - [Pruebas](#tests)
 - [Programas utilizados](#built_using)
