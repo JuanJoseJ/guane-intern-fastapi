@@ -1,11 +1,7 @@
-import os
+
 from pydantic import BaseModel, Field
 from bson import ObjectId
-from pymongo import MongoClient
 
-
-client = MongoClient(os.environ["MONGODB_URL"])
-db = client.guane
 
 # Para usar mongodb se requiere poder manejar ObjectIDs como pk
 # El metodo siguiente funciona como parser de este tipo para pydantic
