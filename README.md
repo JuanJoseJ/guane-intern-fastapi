@@ -1,120 +1,146 @@
-<p align="center">
-  <a href="" rel="noopener">
- <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a>
-</p>
 
-<h3 align="center">Project Title</h3>
 
-<div align="center">
-
-[![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
-
-</div>
+<h3 align="center">guane-intern-fastapi</h3>
 
 ---
 
-<p align="center"> Few lines describing your project.
+<p align="center"> Este proyecto es una prueba técnica de backend para la empresa Guane. Hace parte del CRUD de una aplicación que almacena información sobre perros.
     <br> 
 </p>
 
 ## 📝 Table of Contents
 
-- [About](#about)
-- [Getting Started](#getting_started)
-- [Deployment](#deployment)
-- [Usage](#usage)
-- [Built Using](#built_using)
-- [TODO](../TODO.md)
-- [Contributing](../CONTRIBUTING.md)
-- [Authors](#authors)
-- [Acknowledgments](#acknowledgement)
+- [Prerequisitos](#prerequisitos)
+- [Configuracion Inicial](#getting_started)
+- [Pruebas](#tests)
+- [Programas utilizados](#built_using)
+- [Autos](#authors)
+- [Reconocimientos](#acknowledgement)
 
-## 🧐 About <a name = "about"></a>
+### Prerequisites <a name = "prerequisito"></a>
 
-Write about 1-2 paragraphs describing the purpose of your project.
+Para obtener una copia del proyecto solo se requiere descargarlo, una forma de hacer esto es con:
+```
+git clone https://github.com/JuanJoseJ/guane-intern-fastapi.git
+```
+
+Lo siguiente es instalar las dependencias del proyecto desde el Pipfile, para esto se requiere tener en su máquina [pipenv](https://pipenv-fork.readthedocs.io/en/latest/basics.html#example-pipenv-workflow). Se debe recordar hacerlo desde el directorio principal del proyecto y usando el siguiente comando:
+```
+pipenv install
+```
+
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+La base de datos utilizada para este proyecto es MongoDB, y se requiere configurar las variables de esta en el archivo .env que se encuentra acá, cambiando las variables de MONGODB_HOST, MONGODB_PORT y MONGODB_NAME por el nombre de host, puerto y nombre de la base de datos que se quiera utilizar.
+**Importante**: Recuerde que la base de datos debe tener una colección llamada 'dogs' para funcionar.
 
-### Prerequisites
+En la carpeta de modelos queda adjunto un archivo llamado sampledb.json con el registro de varios documentos y que puede ser utilizado a modo de ejemplo para iniciar la colección.
 
-What things you need to install the software and how to install them.
+Para más información sobre cómo crear una base de datos con MongoDB, dirigirse a los [Documentos Oficiales](https://www.mongodb.com/basics/create-database)
 
+Una vez que se tenga configurada la base de datos en el entorno, es posible iniciar el mismo de la siguiente manera:
 ```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running.
-
-Say what the step will be
-
-Install the requirements like this:
-
+pipenv shell
 ```
 
-```
+Desde aquí se iniciara el programa con el archivo *main.py*, además, cada que se hagan actualizaciones en la aplicación, este se reiniciara para actualizarse a estas medidas.
 
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo.
 
 ## 🔧 Running the tests <a name = "tests"></a>
 
-Explain how to run the automated tests for this system.
+Con el programa corriendo es posible hacer los llamados a la api que esta configurada de manera predeterminada en *http://localhost:8000* y que redigirá a la documentación autogenerada por OpenAPI en el programa.
+Desde este mismo puerto es posible ahcer todos los llamados de POST, GET, PUT y DELETE.
 
 ### Break down into end to end tests
 
-Explain what these tests test and why
+Los posibles llamados que la aplicación maneja son los siguientes:
 
-```
-Give an example
-```
+*(GET) http://localhost:8000/dogs : Obtener una listado de los perros registrados
+
+*(GET) http://localhost:8000/dogs/{name} : Obtener una entrada a partir del nombre de un perro (Puede regresar varios perros)
+
+*(GET) http://localhost:8000/dogs/is_adopted: Obtener todas las entradas donde la bandera is_adopted sea True
+
+*(POST) http://localhost:8000/dogs/{name}: Guardar un registro según el esquema de perros. El campo picture se debe rellenar con una consulta al API externa https://dog.ceo/api/breeds/image/random
+
+*(PUT) http://localhost:8000/dogs/{name}: Actualizar un registro según el nombre. Puede ser necesaria la id del perro en  caso de que el nombre este repetido
+
+*(DELETE) http://localhost:8000/dogs/{name}: Borrar un registro según el nombre. Puede ser necesaria la id del perro en  caso de que el nombre este repetido
 
 ### And coding style tests
 
-Explain what these tests test and why
+Algunos ejemplos de llamados a la API pueden ser:
 
-```
-Give an example
-```
+*(GET) http://localhost:8000/dogs/Poker
+  Regresa:
+  ```
+    {
+    "_id": {
+      "$oid": "6067729060536f56c8380a45"
+    },
+    "name": "Poker",
+    "picture": "https://images.dog.ceo/breeds/bulldog-boston/n02096585_6238.jpg",
+    "create_date": "2021-04-02",
+    "is_adopted": true
+    }
+  ```
 
-## 🎈 Usage <a name="usage"></a>
+*(POST) http://localhost:8000/dogs/Canela:
+  Regresa y se incluye en la base de datos:
+  ```
+    {
+    "_id": {
+      "$oid": "6067729060536f56c8380a45"
+    },
+    "name": "Poker",
+    "picture": "https://images.dog.ceo/breeds/bulldog-boston/n02096585_6238.jpg",
+    "create_date": "2021-04-02",
+    "is_adopted": true
+    }
+  ```
 
-Para correr la api solo se requiere:
+*(PUT) http://localhost:8000/dogs/Lola?is_adopted=false
+  Regresa y se actualiza en la abse de datos:
+  ```
+    {
+    "_id": {
+      "$oid": "6067729060536f56c8380a45"
+    },
+    "name": "Lola",
+    "picture": "https://images.dog.ceo/breeds/bulldog-boston/n02096585_6238.jpg",
+    "create_date": "2021-04-02",
+    "is_adopted": false
+    }
+  ```
 
-```
-uvicorn main:app --reload
-```
-
-## 🚀 Deployment <a name = "deployment"></a>
-
-Add additional notes about how to deploy this on a live system.
+*(DELETE) http://localhost:8000/dogs/Rocky?id=6067729060536f56c8380a45
+  Regresa y se elimina de la base de datos:
+  ```
+    {
+    "_id": {
+      "$oid": "6067729060536f56c8380a45"
+    },
+    "name": "Rocky",
+    "picture": "https://images.dog.ceo/breeds/bulldog-boston/n02096585_6238.jpg",
+    "create_date": "2021-04-02",
+    "is_adopted": false
+    }
+  ```
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
 - [MongoDB](https://www.mongodb.com/) - Database
-- [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
-- [NodeJs](https://nodejs.org/en/) - Server Environment
+- [FastAPI](https://fastapi.tiangolo.com/) - Server Framework
+- [uvicorn](https://www.uvicorn.org/) - ASGI server
 
 ## ✍️ Authors <a name = "authors"></a>
 
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
+- [@JuanJoseJ](https://github.com/JuanJoseJ) - Desarrollador de la API y aplicante
 
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
+ Nota: Definitivamente contrataría a [@JuanJoseJ](https://github.com/JuanJoseJ)
 
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
 
-- Hat tip to anyone whose code was used
-- Inspiration
-- References
+- Gracias a [Guane](http://guane.com.co/) por la oportunidad
+
